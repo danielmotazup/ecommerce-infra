@@ -26,11 +26,12 @@ class UserController {
 
     @PostMapping
     ResponseEntity<?> createUser(@RequestBody @Valid NewUserRequest newUser) {
+
         Password password = Password.encode(newUser.getPassword());
         var user = new User(newUser.getLogin(), password);
 
         userRepository.save(user);
-        logger.info("CONTROLLER /USERS: novo usuário criado e salvo no repositório");
+        logger.info("Created new User: {}.", user.getUsername());
 
         URI location = URI.create("/api/users/" + user.getId());
         return created(location).build();

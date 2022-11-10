@@ -2,6 +2,8 @@ package br.com.zup.edu.nossalojavirtual.products;
 
 import br.com.zup.edu.nossalojavirtual.users.User;
 import br.com.zup.edu.nossalojavirtual.users.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import static org.springframework.http.ResponseEntity.notFound;
 @RequestMapping("/api/products/{id}/questions")
 class QuestionController {
 
+    Logger logger = LoggerFactory.getLogger(QuestionController.class);
     private final ProductRepository productRepository;
     private final QuestionRepository questionRepository;
     private final ApplicationEventPublisher publisher;
@@ -43,13 +46,16 @@ class QuestionController {
     ResponseEntity<?> askQuestion(@PathVariable("id") UUID id, @RequestBody @Valid NewQuestionRequest newQuestion,
                                   @AuthenticationPrincipal Jwt jwt, UriComponentsBuilder uriBuilder) {
 
-        User user = userRepository.findByEmail(jwt.getClaim("email")).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.UNAUTHORIZED,"usuário não autenticado"));
+        User user = userRepository.findByEmail(jwt.getClaim("email")).orElseThrow(() -> {
+            logger.warn("user unauthorized");
+            return new ResponseStatusException(HttpStatus.UNAUTHORIZED, "usuário não autenticado");
+        });
 
 
         Optional<Product> possibleProduct = productRepository.findById(id);
 
         if (possibleProduct.isEmpty()) {
+            logger.warn("Product id {} not found", id);
             return notFound().build();
         }
 
@@ -63,6 +69,8 @@ class QuestionController {
         List<Question> questions = questionRepository.findByProduct(possibleProduct.get());
 
         List<QuestionResponse> response = QuestionResponse.from(questions);
+
+        logger.info("Created new question: {}.", question.getTitle());
 
         return created(location).body(response);
 

@@ -3,6 +3,8 @@ package br.com.zup.edu.nossalojavirtual.products;
 import br.com.zup.edu.nossalojavirtual.categories.Category;
 import br.com.zup.edu.nossalojavirtual.users.User;
 import org.hibernate.validator.constraints.Length;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +22,8 @@ import static java.lang.String.format;
 import static java.util.stream.Collectors.toSet;
 
 class NewProductRequest {
+
+    Logger logger = LoggerFactory.getLogger(NewProductRequest.class);
 
     @NotBlank
     private String name;
@@ -95,7 +99,10 @@ class NewProductRequest {
     public Product toProduct(PhotoUploader photoUploader, Function<Long, Optional<Category>> findCategoryById, User user) {
 
         Category category = findCategoryById.apply(categoryId)
-                .orElseThrow(() -> new IllegalStateException(format("Category %s is not registered!", categoryId)));
+                .orElseThrow(() -> {
+                    logger.warn("Category {} not found", categoryId);
+                    return new IllegalStateException(format("Category %s is not registered!", categoryId));
+                });
 
         PreProduct preProduct = new PreProduct(user, category, name, price, stockQuantity, description);
 
