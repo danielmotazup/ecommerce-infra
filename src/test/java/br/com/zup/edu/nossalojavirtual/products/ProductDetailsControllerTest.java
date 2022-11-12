@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 
 @SpringBootTest
@@ -57,7 +56,7 @@ class ProductDetailsControllerTest {
     private Product product;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         productRepository.deleteAll();
         categoryRepository.deleteAll();
         userRepository.deleteAll();
@@ -85,9 +84,9 @@ class ProductDetailsControllerTest {
 
     @DisplayName("deve listar um produto existente")
     @Test
-    void teste01()throws Exception{
+    void teste01() throws Exception {
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/api/products/{id}",product.getId())
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/api/products/{id}", product.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(jwt().jwt(jwt -> {
                     jwt.claim("email", user.getUsername());
@@ -96,11 +95,11 @@ class ProductDetailsControllerTest {
         String payload = mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-        ProductDetailsResponse response = mapper.readValue(payload,ProductDetailsResponse.class);
+        ProductDetailsResponse response = mapper.readValue(payload, ProductDetailsResponse.class);
 
-        Assertions.assertThat(response).extracting("id","stockQuantity","description")
+        Assertions.assertThat(response).extracting("id", "stockQuantity", "description")
                 .contains(
-                        product.getId(),product.getStockQuantity(),product.getDescription()
+                        product.getId(), product.getStockQuantity(), product.getDescription()
                 );
 
 
@@ -108,7 +107,7 @@ class ProductDetailsControllerTest {
 
     @DisplayName("não deve listar um produto sem autenticação")
     @Test
-    void teste02()throws Exception {
+    void teste02() throws Exception {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/api/products/{id}", product.getId())
                 .contentType(MediaType.APPLICATION_JSON);
@@ -117,10 +116,9 @@ class ProductDetailsControllerTest {
     }
 
 
-
     @DisplayName("Não deve listar um produto inexistente")
     @Test
-    void teste03()throws Exception {
+    void teste03() throws Exception {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/api/products/{id}", UUID.randomUUID())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -130,36 +128,6 @@ class ProductDetailsControllerTest {
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

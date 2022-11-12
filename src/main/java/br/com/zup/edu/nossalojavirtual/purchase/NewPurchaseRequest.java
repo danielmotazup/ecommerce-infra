@@ -17,6 +17,12 @@ public class NewPurchaseRequest {
     @NotNull
     private PaymentGateway paymentGateway;
 
+    public NewPurchaseRequest(UUID productId, int quantity, PaymentGateway paymentGateway) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.paymentGateway = paymentGateway;
+    }
+
     public UUID getProductId() {
         return productId;
     }
@@ -32,11 +38,5 @@ public class NewPurchaseRequest {
     public Purchase toPurchase(User buyer, Product product) {
 
         return new Purchase(buyer, product, quantity, paymentGateway);
-    }
-
-    public NewPurchaseRequest(UUID productId, int quantity, PaymentGateway paymentGateway) {
-        this.productId = productId;
-        this.quantity = quantity;
-        this.paymentGateway = paymentGateway;
     }
 }

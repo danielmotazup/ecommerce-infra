@@ -1,6 +1,7 @@
 # Regras de negócio
 
 ## Cadastro de novo usuário
+
 ### Necessidades
 
 * Precisamos saber o instante do cadastro, login e senha.
@@ -17,11 +18,12 @@
 ### Resultado esperado
 
 * O usuário precisa estar criado no sistema
-* O cliente que fez a requisição precisa saber que o usuário foi criado. Apenas um retorno com status 200 está suficente.
+* O cliente que fez a requisição precisa saber que o usuário foi criado. Apenas um retorno com status 200 está
+  suficente.
 * Em caso de falha de validação status 400
 
-
 ## Não podemos ter dois usuários com o mesmo email.
+
 ### Necessidades
 
 * Só pode existir um usuário com o mesmo email.
@@ -30,12 +32,12 @@
 
 * Status 400 informando que não foi possível realizar um cadastro com este email.
 
-
 ## Cadastro de categorias
 
 ### Necessidades
 
-No mercado livre você pode criar hierarquias de categorias livres. Ex: Tecnologia -> Celulares -> Smartphones -> Android,Ios etc. Perceba que o sistema precisa ser flexível o suficiente para que essas sequências sejam criadas.
+No mercado livre você pode criar hierarquias de categorias livres. Ex: Tecnologia -> Celulares -> Smartphones ->
+Android,Ios etc. Perceba que o sistema precisa ser flexível o suficiente para que essas sequências sejam criadas.
 
 * Toda categoria tem um nome
 * A categoria pode ter uma categoria mãe
@@ -62,7 +64,8 @@ Vamos permitir o cadastro de um produto por usuário logado.
 * Tem um valor
 * Tem quantidade disponível
 * Características(cada produto pode ter um conjunto de características diferente).
-    [Dá uma olhada na parte de outras características nos detalhes de produtos do mercado livre](https://produto.mercadolivre.com.br/MLB-1279370191-bebedouro-bomba-eletrica-p-garrafo-galo-agua-recarregavel-_JM?variation=48969374724#reco_item_pos=0&reco_backend=navigation&reco_backend_type=function&reco_client=home_navigation-recommendations&reco_id=e55bf74a-9551-42d8-a43d-fb64fa3117d4&c_id=/home/navigation-recommendations/element&c_element_order=1&c_uid=761d5d17-5baf-4fd8-be79-fc65ee66a6fb). Cada característica tem um nome e uma descricao associada.
+  [Dá uma olhada na parte de outras características nos detalhes de produtos do mercado livre](https://produto.mercadolivre.com.br/MLB-1279370191-bebedouro-bomba-eletrica-p-garrafo-galo-agua-recarregavel-_JM?variation=48969374724#reco_item_pos=0&reco_backend=navigation&reco_backend_type=function&reco_client=home_navigation-recommendations&reco_id=e55bf74a-9551-42d8-a43d-fb64fa3117d4&c_id=/home/navigation-recommendations/element&c_element_order=1&c_uid=761d5d17-5baf-4fd8-be79-fc65ee66a6fb)
+  . Cada característica tem um nome e uma descricao associada.
 * Tem uma descrição
 * Pertence a uma categoria
 * Instante de cadastro
@@ -85,7 +88,9 @@ Vamos permitir o cadastro de um produto por usuário logado.
 
 ### Explicação
 
-Com um produto cadastrado, um usuário logado pode adicionar imagens ao seu produto. Não precisa salvar a imagem em algum cloud ou no próprio sistema de arquivos. Cada arquivo de imagem pode virar um link fictício que pode ser adicionado ao produto.
+Com um produto cadastrado, um usuário logado pode adicionar imagens ao seu produto. Não precisa salvar a imagem em algum
+cloud ou no próprio sistema de arquivos. Cada arquivo de imagem pode virar um link fictício que pode ser adicionado ao
+produto.
 
 ### **Necessidades**
 
@@ -106,14 +111,16 @@ Com um produto cadastrado, um usuário logado pode adicionar imagens ao seu prod
 
 ### Explicação
 
-Um usuário logado pode opinar sobre um produto. O ideal era que isso só pudesse ser feito depois da compra, mas podemos trabalhar isso posteriormente..
+Um usuário logado pode opinar sobre um produto. O ideal era que isso só pudesse ser feito depois da compra, mas podemos
+trabalhar isso posteriormente..
 
 ### Necessidades
 
 * Tem uma nota que vai de 1 a 5
 * Tem um título. Ex: espetacular, horrível...
 * Tem uma descrição
-* O usuário logado que fez a pergunta (aqui pode usar usar o approach de definir um usuário na primeira linha do controller e depois trabalhar com o logado de verdade)
+* O usuário logado que fez a pergunta (aqui pode usar usar o approach de definir um usuário na primeira linha do
+  controller e depois trabalhar com o logado de verdade)
 * O produto que para o qual a pergunta foi direcionada
 
 ### Restrições
@@ -159,9 +166,11 @@ Um usuário logado pode fazer uma pergunta sobre o produto
 
 ### Explicação
 
-O front precisa montar essa página => [https://produto.mercadolivre.com.br/MLB-1279370191-bebedouro-bomba-eletrica-p-garrafo-galo-agua-recarregavel-_JM?quantity=1&variation=49037204722&onAttributesExp=true](https://produto.mercadolivre.com.br/MLB-1279370191-bebedouro-bomba-eletrica-p-garrafo-galo-agua-recarregavel-_JM?quantity=1&variation=49037204722&onAttributesExp=true)
+O front precisa montar essa página
+=> [https://produto.mercadolivre.com.br/MLB-1279370191-bebedouro-bomba-eletrica-p-garrafo-galo-agua-recarregavel-_JM?quantity=1&variation=49037204722&onAttributesExp=true](https://produto.mercadolivre.com.br/MLB-1279370191-bebedouro-bomba-eletrica-p-garrafo-galo-agua-recarregavel-_JM?quantity=1&variation=49037204722&onAttributesExp=true)
 
-Não temos todas as informações, mas já temos bastante coisa. Faça, do jeito que achar melhor o código necessário para que o endpoint retorne as informações para que o front monte a página.
+Não temos todas as informações, mas já temos bastante coisa. Faça, do jeito que achar melhor o código necessário para
+que o endpoint retorne as informações para que o front monte a página.
 
 ## Realmente finaliza compra | Parte 1
 
@@ -169,17 +178,21 @@ Não temos todas as informações, mas já temos bastante coisa. Faça, do jeito
 
 Aqui a gente vai simular uma integração com um gateway como paypal, pagseguro etc. O fluxo geralmente é o seguinte:
 
-* O sistema registra uma nova compra e gera um identificador de compra que pode ser passado como argumento para o gateway.
+* O sistema registra uma nova compra e gera um identificador de compra que pode ser passado como argumento para o
+  gateway.
 * O cliente efetua o pagamento no gateway
-* O gateway invoca uma url do sistema passando o identificador de compra do próprio sistema e as informações relativas a transação em si.
+* O gateway invoca uma url do sistema passando o identificador de compra do próprio sistema e as informações relativas a
+  transação em si.
 
-Então essa é a parte 1 do processo de finalização de compra. Onde apenas geramos a compra no sistema. Não precisamos da noção de um carrinho compra. Apenas temos o usuário logado comprando um produto.
+Então essa é a parte 1 do processo de finalização de compra. Onde apenas geramos a compra no sistema. Não precisamos da
+noção de um carrinho compra. Apenas temos o usuário logado comprando um produto.
 
 ### Necessidades
 
 * A pessoa pode escolher a quantidade de itens daquele produto que ela quer comprar
 * O estoque do produto é abatido
-* Um email é enviado para a pessoa que é dona(o) do produto informando que um usuário realmente disse que queria comprar seu produto.
+* Um email é enviado para a pessoa que é dona(o) do produto informando que um usuário realmente disse que queria comprar
+  seu produto.
 * Uma compra é gerada informando o status INICIADA e com as seguintes informações:
     * Gateway escolhido para pagamento
     * Produto escolhido
@@ -197,9 +210,11 @@ Então essa é a parte 1 do processo de finalização de compra. Onde apenas ger
 ### **Resultado esperado**
 
 * Caso a pessoa escolha o paypal seu endpoint deve gerar o seguinte redirect(302):
-  * Retorne o endereço da seguinte maneira: paypal.com?buyerId={idGeradoDaCompra}&redirectUrl={urlRetornoAppPosPagamento}
+    * Retorne o endereço da seguinte maneira:
+      paypal.com?buyerId={idGeradoDaCompra}&redirectUrl={urlRetornoAppPosPagamento}
 * Caso a pessoa escolha o pagseguro o seu endpoint deve gerar o seguinte redirect(302):
-  * Retorne o endereço da seguinte maneira: pagseguro.com?returnId={idGeradoDaCompra}&redirectUrl={urlRetornoAppPosPagamento}
+    * Retorne o endereço da seguinte maneira:
+      pagseguro.com?returnId={idGeradoDaCompra}&redirectUrl={urlRetornoAppPosPagamento}
 * Caso aconteça alguma restrição retorne um status 400 informando os problemas.
 
 ## Realmente finaliza a compra | Parte 2
@@ -214,21 +229,28 @@ O meio de pagamento(pagseguro ou paypal) redireciona para a aplicação passando
 
 * id da compra no sistema de origem
 * id do pagamento na plataforma escolhida
-* Status da compra. Para o status vamos assumir os dois básicos(Sucesso, Falha). Os gateways de pagamento informam isso de maneira distinta.
+* Status da compra. Para o status vamos assumir os dois básicos(Sucesso, Falha). Os gateways de pagamento informam isso
+  de maneira distinta.
 * Paypal retorna o número 1 para sucesso e o número 0 para erro.
 * Pagseguro retorna a string SUCESSO ou ERRO.
 
 **Temos alguns passos aqui**
 
-* Precisamos registrar a tentativa de pagamento com todas as informações envolvidas. Além das citadas, é necessário registrar o exato instante do processamento do retorno do pagamento.
+* Precisamos registrar a tentativa de pagamento com todas as informações envolvidas. Além das citadas, é necessário
+  registrar o exato instante do processamento do retorno do pagamento.
 * Caso a compra tenha sido concluída com sucesso:
-    * Precisamos nos comunicar com o setor de nota fiscal que é um outro sistema. Ele precisa receber apenas receber o id da compra e o id do usuário que fez a compra.
-    * Neste momento você não precisa criar outro projeto para simular isso. Crie um controller com um endpoint fake e faça uma chamada local mesmo.
-    * Também precisamos nos comunicar com o sistema de ranking dos vendedores. Esse sistema recebe o id da compra e o id do vendedor.
+    * Precisamos nos comunicar com o setor de nota fiscal que é um outro sistema. Ele precisa receber apenas receber o
+      id da compra e o id do usuário que fez a compra.
+    * Neste momento você não precisa criar outro projeto para simular isso. Crie um controller com um endpoint fake e
+      faça uma chamada local mesmo.
+    * Também precisamos nos comunicar com o sistema de ranking dos vendedores. Esse sistema recebe o id da compra e o id
+      do vendedor.
     * Neste momento você não precisa criar outro projeto para simular isso. Faça uma chamada local mesmo.
-* Para fechar precisamos mandar um email para quem comprou avisando da conclusão com sucesso. Pode colocar o máximo de informações da compra que puder.
+* Para fechar precisamos mandar um email para quem comprou avisando da conclusão com sucesso. Pode colocar o máximo de
+  informações da compra que puder.
 * Caso a compra não tenha sido concluída com sucesso, precisamos:
-    *   Enviar um email para o usuário informando que o pagamento falhou com o link para que a pessoa possa tentar de novo.
+    * Enviar um email para o usuário informando que o pagamento falhou com o link para que a pessoa possa tentar de
+      novo.
 
 ### Restrição
 

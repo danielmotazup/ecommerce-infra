@@ -49,7 +49,7 @@ class NewCategoryRequest {
             var category = findCategoryById.apply(superCategory)
                     .orElseThrow(() -> {
                         logger.error("A categoria {} não existe", superCategory);
-                        return new IllegalStateException(format("The category %s informed does not exists",superCategory));
+                        return new IllegalStateException(format("The category %s informed does not exists", superCategory));
                     });
 
             return new Category(name, category);

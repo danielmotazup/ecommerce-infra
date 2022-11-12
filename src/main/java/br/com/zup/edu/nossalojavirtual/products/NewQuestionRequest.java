@@ -10,20 +10,19 @@ class NewQuestionRequest {
     @NotBlank
     private String title;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question toQuestion(User user, Product product) {
-        return new Question(title, user, product);
-    }
-
-
     @JsonCreator
     public NewQuestionRequest(String title) {
         this.title = title;
     }
 
     public NewQuestionRequest() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Question toQuestion(User user, Product product) {
+        return new Question(title, user, product);
     }
 }

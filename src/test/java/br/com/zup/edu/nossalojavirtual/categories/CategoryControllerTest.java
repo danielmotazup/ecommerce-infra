@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 
 
@@ -58,8 +57,9 @@ class CategoryControllerTest {
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/categories/*"));
 
-        assertEquals(1,categoryRepository.findAll().size());
+        assertEquals(1, categoryRepository.findAll().size());
     }
+
     @DisplayName("deve cadastrar uma nova categoria com supercategoria")
     @Test
     void teste02() throws Exception {
@@ -79,7 +79,7 @@ class CategoryControllerTest {
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/categories/*"));
 
-        assertEquals(2,categoryRepository.findAll().size());
+        assertEquals(2, categoryRepository.findAll().size());
 
     }
 
@@ -115,8 +115,6 @@ class CategoryControllerTest {
     }
 
 
-
-
     @DisplayName("não deve cadastrar uma categoria sem nome")
     @Test
     void teste05() throws Exception {
@@ -132,7 +130,6 @@ class CategoryControllerTest {
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         MensagemDeErro mensagemDeErro = mapper.readValue(payloadResponse, MensagemDeErro.class);
-
 
 
         assertEquals(1, mensagemDeErro.getMensagens().size());

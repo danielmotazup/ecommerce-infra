@@ -14,9 +14,8 @@ import java.net.URI;
 @RequestMapping("/api/categories")
 class CategoryController {
 
-    Logger logger = LoggerFactory.getLogger(CategoryController.class);
-
     private final CategoryRepository categoryRepository;
+    Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     CategoryController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
@@ -26,7 +25,7 @@ class CategoryController {
     ResponseEntity<?> createCategory(@RequestBody @Valid NewCategoryRequest newCategory) {
         Category category = newCategory.toCategory(categoryRepository::findCategoryById);
         categoryRepository.save(category);
-        logger.info("Criada nova categoria: {}.", category.getName());
+        logger.info("Created new category: {}.", category.getName());
 
         URI location = URI.create("/api/categories/" + category.getId());
         return ResponseEntity.created(location).build();

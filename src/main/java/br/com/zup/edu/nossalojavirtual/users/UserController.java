@@ -16,9 +16,8 @@ import static org.springframework.http.ResponseEntity.created;
 @RequestMapping("/api/users")
 class UserController {
 
-    Logger logger = LoggerFactory.getLogger(UserController.class);
-
     private final UserRepository userRepository;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     UserController(UserRepository userRepository) {
         this.userRepository = userRepository;

@@ -2,7 +2,6 @@ package br.com.zup.edu.nossalojavirtual.products;
 
 import br.com.zup.edu.nossalojavirtual.categories.CategoryRepository;
 import br.com.zup.edu.nossalojavirtual.shared.validators.ObjectIsRegisteredValidator;
-import br.com.zup.edu.nossalojavirtual.users.Password;
 import br.com.zup.edu.nossalojavirtual.users.User;
 import br.com.zup.edu.nossalojavirtual.users.UserRepository;
 import org.slf4j.Logger;
@@ -24,11 +23,11 @@ import static org.springframework.http.ResponseEntity.created;
 @RequestMapping("/api/products")
 class ProductController {
 
-    Logger logger = LoggerFactory.getLogger(ProductController.class);
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final PhotoUploader photoUploader;
     private final UserRepository userRepository;
+    Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     public ProductController(ProductRepository productRepository,
                              CategoryRepository categoryRepository,
@@ -44,9 +43,8 @@ class ProductController {
 
         User user = userRepository.findByEmail(jwt.getClaim("email")).orElseThrow(() -> {
             logger.warn("user unauthorized");
-                return new ResponseStatusException(HttpStatus.UNAUTHORIZED,"usuario não autenticado");
-                });
-
+            return new ResponseStatusException(HttpStatus.UNAUTHORIZED, "usuario não autenticado");
+        });
 
 
         Product product = newProduct.toProduct(photoUploader, categoryRepository::findCategoryById, user);

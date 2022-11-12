@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 
 @SpringBootTest
@@ -43,7 +42,6 @@ class UserControllerTest {
 
     @Autowired
     private ProductRepository productRepository;
-
 
 
     @BeforeEach
@@ -71,7 +69,7 @@ class UserControllerTest {
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/users/*"));
 
-        assertEquals(1,userRepository.findAll().size());
+        assertEquals(1, userRepository.findAll().size());
 
 
     }
@@ -203,7 +201,6 @@ class UserControllerTest {
         ));
 
     }
-
 
 
 }

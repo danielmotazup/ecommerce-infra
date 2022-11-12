@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   keycloak:
+    container_name: keycloack
     image: quay.io/keycloak/keycloak:latest
     environment:
       DB_VENDOR: h2
@@ -10,4 +11,4 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
       - 18080:8080
-    entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--http-relative-path=/auth"]
+    entrypoint: [ "/opt/keycloak/bin/kc.sh", "start-dev", "--http-relative-path=/auth" ]

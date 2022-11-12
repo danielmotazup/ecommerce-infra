@@ -26,6 +26,12 @@ class PaymentReturn {
     @NotBlank
     private String status;
 
+    public PaymentReturn(Long purchaseId, String paymentId, String status) {
+        this.purchaseId = purchaseId;
+        this.paymentId = paymentId;
+        this.status = status;
+    }
+
     public Long getPurchaseId() {
         return purchaseId;
     }
@@ -46,18 +52,11 @@ class PaymentReturn {
         return ERROR;
     }
 
-
     public PaymentStatus pagSeguroStatus() {
         if (status.equals("SUCESSO")) {
             return SUCCESS;
         }
 
         return ERROR;
-    }
-
-    public PaymentReturn(Long purchaseId, String paymentId, String status) {
-        this.purchaseId = purchaseId;
-        this.paymentId = paymentId;
-        this.status = status;
     }
 }

@@ -21,7 +21,7 @@ class Characteristic {
     }
 
     public Characteristic(@NotBlank String name,
-                   @NotBlank String description) {
+                          @NotBlank String description) {
         hasText(name, "name must have some text");
         hasText(name, "description must be set");
 

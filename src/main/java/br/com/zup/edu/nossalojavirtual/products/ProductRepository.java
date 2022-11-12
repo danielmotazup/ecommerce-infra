@@ -22,6 +22,5 @@ public interface ProductRepository extends Repository<Product, UUID> {
     void deleteAll();
 
 
-
     List<Product> findAll();
 }

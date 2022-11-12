@@ -19,9 +19,8 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/api/products/{id}")
 class ProductDetailsController {
 
-    Logger logger = LoggerFactory.getLogger(ProductController.class);
-
     private final ProductRepository productRepository;
+    Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     ProductDetailsController(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -34,7 +33,6 @@ class ProductDetailsController {
             logger.warn("The id {} doesn't exist", id);
             return notFound().build();
         }
-
 
 
         return ok(new ProductDetailsResponse(possibleProduct.get(), uriComponentsBuilder));

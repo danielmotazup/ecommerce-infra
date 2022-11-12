@@ -26,12 +26,11 @@ import static org.springframework.http.ResponseEntity.notFound;
 @RequestMapping("/api/products/{id}/questions")
 class QuestionController {
 
-    Logger logger = LoggerFactory.getLogger(QuestionController.class);
     private final ProductRepository productRepository;
     private final QuestionRepository questionRepository;
     private final ApplicationEventPublisher publisher;
-
     private final UserRepository userRepository;
+    Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     QuestionController(ProductRepository productRepository,
                        QuestionRepository questionRepository,

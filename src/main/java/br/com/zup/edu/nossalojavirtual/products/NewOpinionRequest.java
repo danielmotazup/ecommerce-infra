@@ -30,6 +30,13 @@ class NewOpinionRequest {
     @NotNull
     private UUID productId;
 
+    public NewOpinionRequest(Integer rating, String title, String description, UUID productId) {
+        this.rating = rating;
+        this.title = title;
+        this.description = description;
+        this.productId = productId;
+    }
+
     public Integer getRating() {
         return rating;
     }
@@ -44,13 +51,6 @@ class NewOpinionRequest {
 
     public UUID getProductId() {
         return productId;
-    }
-
-    public NewOpinionRequest(Integer rating, String title, String description, UUID productId) {
-        this.rating = rating;
-        this.title = title;
-        this.description = description;
-        this.productId = productId;
     }
 
     public ProductOpinion toProductOpinion(Function<UUID, Optional<Product>> findProductById, User user) {

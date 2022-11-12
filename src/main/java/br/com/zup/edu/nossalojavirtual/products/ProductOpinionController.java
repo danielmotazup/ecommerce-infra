@@ -22,12 +22,10 @@ import static org.springframework.http.ResponseEntity.created;
 @RequestMapping("/api/opinions")
 class ProductOpinionController {
 
-    Logger logger = LoggerFactory.getLogger(ProductOpinionController.class);
-
     private final ProductOpinionRepository productOpinionRepository;
     private final ProductRepository productRepository;
-
     private final UserRepository userRepository;
+    Logger logger = LoggerFactory.getLogger(ProductOpinionController.class);
 
     public ProductOpinionController(ProductOpinionRepository productOpinionRepository,
                                     ProductRepository productRepository, UserRepository userRepository) {
@@ -41,9 +39,9 @@ class ProductOpinionController {
                              @AuthenticationPrincipal Jwt jwt) {
 
         User user = userRepository.findByEmail(jwt.getClaim("email")).orElseThrow(() -> {
-                    logger.warn("user unauthorized");
-                    return new ResponseStatusException(HttpStatus.UNAUTHORIZED, "usuario não autenticado");
-                });
+            logger.warn("user unauthorized");
+            return new ResponseStatusException(HttpStatus.UNAUTHORIZED, "usuario não autenticado");
+        });
 
 
         var opinion = newOpinion.toProductOpinion(productRepository::findById, user);
