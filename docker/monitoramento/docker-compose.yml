@@ -1,5 +1,15 @@
 version: '3.0'
 services:
+  db:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=marketplace
+
   prometheus:
     container_name: prometheus
     image: prom/prometheus
