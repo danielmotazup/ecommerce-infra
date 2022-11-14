@@ -16,8 +16,12 @@ services:
     volumes:
       - prometheus-volume:/etc/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./first_rule.yml:/etc/prometheus/first_rule.yml
+      - ./second_rule.yml:/etc/prometheus/second_rule.yml
     ports:
       - "9090:9090"
+    networks:
+      - metricas
   grafana:
     container_name: grafana
     image: grafana/grafana
@@ -27,6 +31,26 @@ services:
       - "3000:3000"
     depends_on:
       - prometheus
+    networks:
+      - metricas
+
+  alertmanager:
+    container_name: alertmanager
+    image: prom/alertmanager:v0.23.0
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    networks:
+      - metricas
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager.yml
+      - alertmanager-data:/etc/alertmanager/data
+    command: --config.file=/etc/alertmanager/alertmanager.yml --log.level=debug
 volumes:
   grafana-volume:
   prometheus-volume:
+  alertmanager-data:
+
+networks:
+  metricas:
+    driver: bridge

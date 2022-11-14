@@ -1,0 +1,13 @@
+groups:
+  - name: marketplace
+    rules:
+      - alert: tempoMaximoEmEstadoDeAnalise
+        expr: http_server_requests_seconds_count{status="500"} > 0.01
+        for: 2m
+        labels:
+          app: marketplace
+          severity: warning
+        annotations:
+          title: Tempo de resposta máximo
+          summary: Tempo máximo de resposta acima de 0.01
+          description: O tempo de resposta máximo para requisições excedeu o limite
